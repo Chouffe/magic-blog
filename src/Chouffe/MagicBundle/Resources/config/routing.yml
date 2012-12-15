@@ -1,0 +1,21 @@
+chouffe_magic_homepage:
+    pattern:  /hello/{name}
+    defaults: { _controller: ChouffeMagicBundle:Default:index }
+
+
+news_fetch:
+    pattern: /news/fetch/{id}
+    defaults: { _controller: ChouffeMagicBundle:News:fetch }
+    requirements:
+        id: \d+
+news_add:
+    pattern: /news/add
+    defaults: { _controller: ChouffeMagicBundle:News:add } 
+news_update:
+    pattern: /news/update
+    defaults: { _controller: ChouffeMagicBundle:News:update } 
+news_delete:
+    pattern: /news/delete/{id}
+    defaults: { _controller: ChouffeMagicBundle:News:delete }
+    requirements:
+        id: \d+

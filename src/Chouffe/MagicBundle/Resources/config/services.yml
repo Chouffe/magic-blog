@@ -1,0 +1,7 @@
+parameters:
+#    chouffe_magic.example.class: Chouffe\MagicBundle\Example
+
+services:
+#    chouffe_magic.example:
+#        class: %chouffe_magic.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]
