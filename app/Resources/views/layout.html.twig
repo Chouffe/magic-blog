@@ -10,9 +10,11 @@
         <!-- Styles -->
         {% block stylesheets %}
         <link rel="stylesheet" href="{{ asset('css/bootstrap.css') }}" type="text/css" />
+        <link href='http://fonts.googleapis.com/css?family=Milonga' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" href="{{ asset('css/header.css') }}" type="text/css" />
         <style>
             body {
-                padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
+                padding-top: 30px; /* 60px to make the container go all the way to the bottom of the topbar */
             }
         </style>
         <link href="{{ asset('css/bootstrap-responsive.css') }}" rel="stylesheet">
@@ -39,9 +41,10 @@
                     <a class="brand" href="#">My Website</a>
                     <div class="nav-collapse collapse">
                         <ul class="nav">
-                            <li class="active"><a href="#">Home</a></li>
-                            <li><a href="#about">About</a></li>
-                            <li><a href="#contact">Contact</a></li>
+                            <li {% if page is defined %} {% if page == 'home'%} class="active" {% endif %} {% endif %}><a href="{{ path('home') }}">Home</a></li>
+                            <li {% if page is defined %} {% if page == 'gallery'%} class="active" {% endif %} {% endif %}><a href="{{ path('gallery') }}">Gallery</a></li>
+                            <li {% if page is defined %} {% if page == 'about'%} class="active" {% endif %} {% endif %}><a href="{{ path('about') }}">About</a></li>
+                            <li {% if page is defined %} {% if page == 'contact'%} class="active" {% endif %} {% endif %}><a href="{{ path('contact') }}">Contact</a></li>
                         </ul>
                     </div><!--/.nav-collapse -->
                 </div>
@@ -50,21 +53,17 @@
 
         {# render "SdzBlogBundle:Blog:menu" with {'nombre': 3} #}
 
-        <div class="container">
+        <header id="header1">
+            <div class="container">
+                <h1>Paul Caillau ~ {% block main_title %}Home{% endblock %}</h1>
+            </div>
+        </header>
 
-            <h1>Bootstrap starter template</h1>
-            <p>Use this document as a way to quick start any new project.<br> All you get is this message and a barebones HTML document.</p>
+        <div class="container">
             <div id="content" class="span9">
                 {% block body %}
                 {% endblock %}
             </div>
-
-            <hr>
-
-            <footer>
-            <p>The sky's the limit &copy; 2012 and beyond.</p>
-            </footer>
-
         </div> <!-- /container -->
 
         <!-- Javascript
@@ -74,6 +73,8 @@
         {# Ajoutez ces javascripts si vous comptez vous servir des fonctionnalités du bootstrap Twitter #}
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
         <script type="text/javascript" src="{{ asset('js/bootstrap.js') }}"></script>
+        {% endblock %}
+        {% block jquery %}
         {% endblock %}
 
     </body>

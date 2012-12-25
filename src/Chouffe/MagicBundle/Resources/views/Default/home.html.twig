@@ -1,0 +1,16 @@
+{% extends "ChouffeMagicBundle::layout.html.twig" %}
+
+{% block title %}
+    Home - {{ parent() }}
+{% endblock %}
+
+{% block page_content %}
+    {% for news in newsList %}
+        <img src="{{ asset('images/news') }}{{ news.cover }}" class="img-polaroid" />
+    {% else %}
+    No news
+    {% endfor %}
+Liste des News
+{% endblock %}
+
+

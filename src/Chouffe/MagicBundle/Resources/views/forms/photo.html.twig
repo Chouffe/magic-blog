@@ -1,0 +1,21 @@
+{% extends "ChouffeMagicBundle::layout.html.twig" %}
+
+{% block page_content %}
+<h3>Photo's form</h3>
+
+<div class="well">
+    <form method="post"  action="{{ path('photo_add', {album:1}) }}" {{ form_enctype(form)
+    }} name="photo_form">
+        {{ form_widget(form) }}
+        <input type="submit" class="btn btn-primary" />
+    </form>
+</div>
+{% endblock %}
+
+{% block jquery %}
+<script>
+    $(function(){
+    });
+</script>
+{% endblock %}
+

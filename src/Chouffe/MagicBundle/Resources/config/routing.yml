@@ -1,21 +1,76 @@
+# Homepage
 chouffe_magic_homepage:
     pattern:  /hello/{name}
     defaults: { _controller: ChouffeMagicBundle:Default:index }
 
-
+# News Routing
 news_fetch:
     pattern: /news/fetch/{id}
     defaults: { _controller: ChouffeMagicBundle:News:fetch }
     requirements:
         id: \d+
+news_fetch_range:
+    pattern: /news/fetch_range/{number}
+    defaults: { _controller: ChouffeMagicBundle:News:fetchRange }
+    requirements:
+        number: \d*
 news_add:
     pattern: /news/add
     defaults: { _controller: ChouffeMagicBundle:News:add } 
 news_update:
-    pattern: /news/update
+    pattern: /news/update/{id}
     defaults: { _controller: ChouffeMagicBundle:News:update } 
+    requirements:
+        id: \d+
 news_delete:
     pattern: /news/delete/{id}
     defaults: { _controller: ChouffeMagicBundle:News:delete }
     requirements:
         id: \d+
+
+# Album Routing
+album_add:
+    pattern: /album/add
+    defaults: { _controller: ChouffeMagicBundle:Album:add }
+album_update:
+    pattern: /album/update/{id}
+    defaults: { _controller: ChouffeMagicBundle:Album:update }
+    requirements:
+        id: \d+
+album_delete:
+    pattern: /album/delete/{id}
+    defaults: { _controller: ChouffeMagicBundle:Album:delete }
+    requirements:
+        id: \d+
+
+# Photo Routing
+photo_add:
+    pattern: /album/{album}/photo/add
+    defaults: { _controller: ChouffeMagicBundle:Photo:add }
+    requirements:
+        album: \d+
+photo_update:
+    pattern: /album/{album}/photo/update/{id}
+    defaults: { _controller: ChouffeMagicBundle:Photo:update }
+    requirements:
+        id: \d+
+        album: \d+
+photo_delete:
+    pattern: /photo/delete/{id}
+    defaults: { _controller: ChouffeMagicBundle:Photo:delete }
+    requirements:
+        id: \d+
+
+# Main nav routing
+gallery:
+    pattern: /gallery
+    defaults: { _controller: ChouffeMagicBundle:Album:fetchAll }
+contact:
+    pattern: /contact
+    defaults: { _controller: ChouffeMagicBundle:Default:contact }
+about:
+    pattern: /about
+    defaults: { _controller: ChouffeMagicBundle:Default:about }
+home:
+    pattern: /home
+    defaults: { _controller: ChouffeMagicBundle:News:fetchAll }

@@ -7,19 +7,14 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
- * Chouffe\MagicBundle\Entity\News
+ * Chouffe\MagicBundle\Entity\Photo
  *
  * @ORM\Table()
- * @ORM\Entity(repositoryClass="Chouffe\MagicBundle\Entity\NewsRepository")
+ * @ORM\Entity(repositoryClass="Chouffe\MagicBundle\Entity\PhotoRepository")
  * @ORM\HasLifecycleCallbacks
  */
-class News
+class Photo
 {
-    public function __construct()
-    {
-        $this->setDate(new \DateTime());
-        $this->setDateLastUpdate(new \DateTime());
-    }
     /**
      * @var integer $id
      *
@@ -37,39 +32,25 @@ class News
     private $title;
 
     /**
-     * @var \DateTime $date
+     * @var string $image
      *
-     * @ORM\Column(name="date", type="datetime")
+     * @ORM\Column(name="image", type="string", length=255, nullable=false)
      */
-    private $date;
-    
-    /**
-     * @var \DateTime $dateLastUpdate
-     *
-     * @ORM\Column(name="date_last_update", type="datetime")
-     */
-    private $dateLastUpdate;
+    private $image;
 
-    /**
-     * @var string $content
-     *
-     * @ORM\Column(name="content", type="text")
-     */
-    private $content;
-
-    /**
-     * @var string $cover
-     *
-     * @ORM\Column(name="cover", type="string", length=255, nullable=true)
-     */
-    private $cover;
-    
     /**
      * @Assert\File(maxSize="6000000")
      */
     public $file;
 
     /**
+    * @ORM\ManyToOne(targetEntity="Chouffe\MagicBundle\Entity\Album")
+    * @ORM\JoinColumn(nullable=false)
+    */
+    private $album;
+
+    /**
+     *
      * Get id
      *
      * @return integer 
@@ -83,7 +64,7 @@ class News
      * Set title
      *
      * @param string $title
-     * @return News
+     * @return Photo
      */
     public function setTitle($title)
     {
@@ -103,114 +84,45 @@ class News
     }
 
     /**
-     * Set date
+     * Set image
      *
-     * @param \DateTime $date
-     * @return News
+     * @param string $image
+     * @return Photo
      */
-    public function setDate($date)
+    public function setImage($image)
     {
-        $this->date = $date;
+        $this->image = $image;
     
         return $this;
     }
 
     /**
-     * Get date
-     *
-     * @return \DateTime 
-     */
-    public function getDate()
-    {
-        return $this->date;
-    }
-
-    /**
-     * Set content
-     *
-     * @param string $content
-     * @return News
-     */
-    public function setContent($content)
-    {
-        $this->content = $content;
-    
-        return $this;
-    }
-
-    /**
-     * Get content
+     * Get image
      *
      * @return string 
      */
-    public function getContent()
+    public function getImage()
     {
-        return $this->content;
+        return $this->image;
     }
 
-    /**
-     * Set cover
-     *
-     * @param string $cover
-     * @return News
-     */
-    public function setCover($cover)
-    {
-        $this->cover = $cover;
-    
-        return $this;
-    }
-
-    /**
-     * Get cover
-     *
-     * @return string 
-     */
-    public function getCover()
-    {
-        return $this->cover;
-    }
-
-    /**
-     * Set dateLastUpdate
-     *
-     * @param \DateTime $dateLastUpdate
-     * @return News
-     */
-    public function setDateLastUpdate($dateLastUpdate)
-    {
-        $this->dateLastUpdate = $dateLastUpdate;
-    
-        return $this;
-    }
-
-    /**
-     * Get dateLastUpdate
-     *
-     * @return \DateTime 
-     */
-    public function getDateLastUpdate()
-    {
-        return $this->dateLastUpdate;
-    }
-    
     public function getAbsolutePath()
     {
-        return null === $this->cover
+        return null === $this->image
             ? null
-            : $this->getUploadRootDir().'/'.$this->cover;
+            : $this->getUploadRootDir().'/'.$this->image;
     }
 
     public function getWebPath()
     {
-        return null === $this->cover
+        return null === $this->image
             ? null
-            : $this->getUploadDir().'/'.$this->cover;
+            : $this->getUploadDir().'/'.$this->image;
     }
 
     protected function getUploadRootDir()
     {
-        // the absolute directory cover where uploaded
+        // the absolute directory image where uploaded
         // documents should be saved
         return __DIR__.'/../../../../web/'.$this->getUploadDir();
     }
@@ -219,7 +131,7 @@ class News
     {
         // get rid of the __DIR__ so it doesn't screw up
         // when displaying uploaded doc/image in the view.
-        return 'images/news';
+        return 'images/photos';
     }
 
     /**
@@ -239,7 +151,7 @@ class News
         if (null !== $this->file) {
             // do whatever you want to generate a unique name
             $filename = sha1(uniqid(mt_rand(), true));
-            $this->cover = $filename.'.'.$this->file->guessExtension();
+            $this->image = $filename.'.'.$this->file->guessExtension();
         }
     }
 
@@ -256,7 +168,7 @@ class News
         // if there is an error when moving the file, an exception will
         // be automatically thrown by move(). This will properly prevent
         // the entity from being persisted to the database on error
-        $this->file->move($this->getUploadRootDir(), $this->cover);
+        $this->file->move($this->getUploadRootDir(), $this->image);
 
         unset($this->file);
     }
@@ -267,8 +179,7 @@ class News
     public function removeUpload()
     {
         if ($file = $this->getAbsolutePath()) {
-            if($this->cover != null)
-                unlink($file);
+            unlink($file);
         }
     }
 }

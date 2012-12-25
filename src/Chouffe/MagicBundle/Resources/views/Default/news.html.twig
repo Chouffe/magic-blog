@@ -1,0 +1,52 @@
+{% extends "ChouffeMagicBundle::layout.html.twig" %}
+
+{% block title %}
+    News - {{ parent() }}
+{% endblock %}
+
+{% block page_content %}
+    
+
+    <h2>Last News 
+        {% if is_granted('ROLE_ADMIN') %}
+        <span id="add_form_news" class="btn btn-primary">Add</span>
+        {% endif %}
+    </h2>
+    <div id="form_news">
+        {% include "ChouffeMagicBundle:forms:news.html.twig" %}
+    </div>
+    {% for news in newsList %}
+    <div class="media">
+        <span class="pull-left">
+            {% if is_granted('ROLE_ADMIN') %}
+            <div onclick="adminPopover(this)" data-html="true" rel="popover" data-placement="right" data-content="<b>Modifier</b> - <a href='{{ path('news_delete', {'id':news.id}) }}'>Supprimer</a>" title="Administration">
+            {% endif %}
+            <img src="{{ asset('images/news/'~news.cover) }}" width="100" class="media-object img-polaroid" />
+            {% if is_granted('ROLE_ADMIN') %}
+            </div> 
+            {% endif %}
+        </span>
+        <div class="media-body">
+            <h4 class="media-heading">{{ news.title }} -  {{
+            news.dateLastUpdate|date("d/m/Y") }}</h4>
+            {{ news.content }}           
+        </div>
+        
+    </div>
+    {% endfor %}
+
+{% endblock %}
+{% block jquery %}
+<script>
+function adminPopover(element)
+{
+   $(element).popover('toggle'); 
+}
+$(function(){
+    $('#form_news').hide();
+    $('#add_form_news').click(function(){
+        $('#form_news').toggle();
+    });
+});
+</script>
+{% endblock %}

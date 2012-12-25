@@ -1,0 +1,17 @@
+@import url(http://fonts.googleapis.com/css?family=Milonga);
+@import url(http://fonts.googleapis.com/css?family=Elsie+Swash+Caps);
+@import url(http://fonts.googleapis.com/css?family=Donegal+One);
+
+#header1{
+    background:url('../../web/img/background.png') center bottom;
+    border:1px solid black; 
+    box-shadow: 0px 5px 20px black; 
+    height: 100px; 
+    margin-bottom:20px; 
+    padding-top:40px; 
+    color:#eee; 
+    text-shadow:-2px 2px 3px black; 
+    /* font-family: 'Milonga', cursive; */
+    /* font-family: 'Elsie Swash Caps', cursive; */
+    font-family: 'Donegal One', serif;
+}

@@ -267,8 +267,7 @@ class News
     public function removeUpload()
     {
         if ($file = $this->getAbsolutePath()) {
-            if($this->cover != null)
-                unlink($file);
+            unlink($file);
         }
     }
 }
