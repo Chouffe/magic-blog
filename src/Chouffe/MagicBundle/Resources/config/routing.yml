@@ -22,6 +22,11 @@ news_update:
     defaults: { _controller: ChouffeMagicBundle:News:update } 
     requirements:
         id: \d+
+news_update_add:
+    pattern: /news/update_add/{id}
+    defaults: { _controller: ChouffeMagicBundle:News:updateAdd } 
+    requirements:
+        id: \d+
 news_delete:
     pattern: /news/delete/{id}
     defaults: { _controller: ChouffeMagicBundle:News:delete }
@@ -37,9 +42,19 @@ album_update:
     defaults: { _controller: ChouffeMagicBundle:Album:update }
     requirements:
         id: \d+
+album_update_add:
+    pattern: /album/update_add/{id}
+    defaults: { _controller: ChouffeMagicBundle:Album:updateAdd }
+    requirements:
+        id: \d+
 album_delete:
     pattern: /album/delete/{id}
     defaults: { _controller: ChouffeMagicBundle:Album:delete }
+    requirements:
+        id: \d+
+album_see:
+    pattern: /album/see/{id}
+    defaults: { _controller: ChouffeMagicBundle:Album:see }
     requirements:
         id: \d+
 
@@ -55,9 +70,24 @@ photo_update:
     requirements:
         id: \d+
         album: \d+
+photo_update_add:
+    pattern: /photo/update_add/{id}
+    defaults: { _controller: ChouffeMagicBundle:Photo:updateAdd }
+    requirements:
+        id: \d+
 photo_delete:
     pattern: /photo/delete/{id}
     defaults: { _controller: ChouffeMagicBundle:Photo:delete }
+    requirements:
+        id: \d+
+
+# Event Routing
+event_add:
+    pattern: /event/add
+    defaults: { _controller: ChouffeMagicBundle:Event:add }
+event_delete:
+    pattern: /event/delete/{id}
+    defaults: { _controller: ChouffeMagicBundle:Event:delete }
     requirements:
         id: \d+
 

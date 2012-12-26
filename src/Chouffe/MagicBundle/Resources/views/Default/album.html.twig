@@ -1,7 +1,11 @@
 {% extends "ChouffeMagicBundle::layout.html.twig" %}
 
 {% block page_content %}
-<h2>My Albums 
+<ul class="breadcrumb">
+    <li><a href="{{ path('gallery') }}">Gallery</a> <span class="divider">/</span></li>
+    <li class="active">Album: {{ album.title }}</li>
+</ul>
+<h2>My Album 
     {% if is_granted('ROLE_ADMIN') %}
     <a href="#myModal" data-toggle="modal" class="btn btn-primary">Add</a>
     <div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -10,37 +14,27 @@
             <h3 id="myModalLabel">Administration</h3>
         </div>
         <div class="modal-body">
-            {% include "ChouffeMagicBundle:forms:album.html.twig" %}
+            {% include "ChouffeMagicBundle:forms:photo.html.twig" %}
         </div>
     </div>
     {% endif %}
 </h2>
 <ul class="thumbnails">
-{% for album in albumList %}
+{% for photo in album.photos %}
 <li class="span3">
-    <a href="{{ path('album_see', {'id':album.id}) }}" class="thumbnail">
+    <a href="#" class="thumbnail">
         <div style="height:200px; width:200px;"></div>
-        {% if album.cover != null  %}
-            <img src="{{ asset('images/photos/') }}{{ album.cover.image }}" />
+        {% if photo.image != null  %}
+            <img src="{{ asset('images/photos/') }}{{ photo.image }}" />
         {% endif %}
     </a>
     {% if is_granted('ROLE_ADMIN') %}
     <div onclick="adminPopover(this)" data-html="true"
     style="text-align:center;" rel="popover"
-    data-placement="top" data-content="<a href='#myModal{{ album.id }}' data-toggle='modal'><i class='icon-pencil'> </i></a> <a href='{{
-    path('album_delete', {'id':album.id}) }}'><i class='icon-trash'> </i></a>" title="Administration">
+    data-placement="top" data-content="<a href='{{
+    path('photo_delete', {'id':photo.id}) }}'>Supprimer</a>" title="Administration">
         <div style="margin-top:5px;" class="btn">Admin</div>
     </div> 
-    
-    <div id="myModal{{ album.id }}" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-            <h3 id="myModalLabel">Administration</h3>
-        </div>
-        <div class="modal-body">
-            {% render "ChouffeMagicBundle:Album:update" with {'id':album.id} %}
-        </div>
-    </div>
     {% endif %}
 </li>
 {% endfor %}
@@ -54,10 +48,11 @@ function adminPopover(element)
    $(element).popover('toggle'); 
 }
 $(function(){
-    $('#form_album').hide();
-    $('#add_form_album').click(function(){
-        $('#form_album').toggle();
+    $('#form_photo').hide();
+    $('#add_form_photo').click(function(){
+        $('#form_photo').toggle();
     });
 });
 </script>
 {% endblock %}
+

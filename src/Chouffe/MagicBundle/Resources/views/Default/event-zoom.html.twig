@@ -1,0 +1,19 @@
+<div class="media">
+    <span class="pull-left">
+        {% if is_granted('ROLE_ADMIN') %}
+        <div onclick="adminPopover(this)" data-html="true" rel="popover"
+        data-placement="right" data-content="<div style='text-align:center;'><a
+        href='{{ path('event_delete', {'id':event.id}) }}' title='delete' alt='delete'><i class='icon-trash'> </i></a></div>" title="Administration">
+        {% endif %}
+        <img src="{{ asset('images/events/'~event.cover) }}" width="100" class="media-object img-polaroid" />
+        {% if is_granted('ROLE_ADMIN') %}
+        </div> 
+        {% endif %}
+    </span>
+    <div class="media-body">
+        <h4 class="media-heading">{{ event.title }} - {{ event.location }} -  {{
+        event.date|date("d/m/Y") }}</h4>
+        {{ event.content }}           
+    </div>
+    
+</div>

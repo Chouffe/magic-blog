@@ -35,6 +35,11 @@ class Album
     private $cover;   
 
     /**
+    * @ORM\OneToMany(targetEntity="Chouffe\MagicBundle\Entity\Photo", mappedBy="album")
+    */
+    private $photos;
+
+    /**
      * Get id
      *
      * @return integer 
@@ -88,5 +93,45 @@ class Album
     public function getCover()
     {
         return $this->cover;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->photos = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+    
+    /**
+     * Add photos
+     *
+     * @param \Chouffe\MagicBundle\Entity\Photo $photos
+     * @return Album
+     */
+    public function addPhoto(\Chouffe\MagicBundle\Entity\Photo $photos)
+    {
+        $this->photos[] = $photos;
+        $photos->setAlbum($this);
+        return $this;
+    }
+
+    /**
+     * Remove photos
+     *
+     * @param \Chouffe\MagicBundle\Entity\Photo $photos
+     */
+    public function removePhoto(\Chouffe\MagicBundle\Entity\Photo $photos)
+    {
+        $this->photos->removeElement($photos);
+    }
+
+    /**
+     * Get photos
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getPhotos()
+    {
+        return $this->photos;
     }
 }

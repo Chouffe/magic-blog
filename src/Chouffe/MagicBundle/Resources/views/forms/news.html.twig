@@ -1,7 +1,7 @@
-<h3>News's form</h3>
-
 <div class="well">
-    <form method="post"  action="{{ path('news_add') }}" {{ form_enctype(form) }} name="news_form">
+    <form method="post"  action="{% if action == 'add' %}{{ path('news_add')
+    }}{% else %}{% if news is defined %}{{ path('news_update_add', {'id':news.id})
+    }}{% endif %}{% endif %}" {{ form_enctype(form) }} name="news_form">
         {{ form_widget(form) }}
         <input type="submit" class="btn btn-primary" />
     </form>

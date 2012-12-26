@@ -6,20 +6,36 @@
 
 {% block page_content %}
     
+    {% render "ChouffeMagicBundle:Event:agenda" %}
 
     <h2>Last News 
         {% if is_granted('ROLE_ADMIN') %}
-        <span id="add_form_news" class="btn btn-primary">Add</span>
+        <a href="#myModal" data-toggle="modal" class="btn btn-primary">Add</a>
+        <div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h3 id="myModalLabel">Administration</h3>
+            </div>
+            <div class="modal-body">
+                {% include "ChouffeMagicBundle:forms:news.html.twig" %}
+            </div>
+        </div>
         {% endif %}
     </h2>
-    <div id="form_news">
-        {% include "ChouffeMagicBundle:forms:news.html.twig" %}
-    </div>
     {% for news in newsList %}
     <div class="media">
         <span class="pull-left">
             {% if is_granted('ROLE_ADMIN') %}
-            <div onclick="adminPopover(this)" data-html="true" rel="popover" data-placement="right" data-content="<b>Modifier</b> - <a href='{{ path('news_delete', {'id':news.id}) }}'>Supprimer</a>" title="Administration">
+            <div onclick="adminPopover(this)" data-html="true" rel="popover" data-placement="right" data-content="<div style='text-align:center;'><a href='#myModal{{ news.id }}' data-toggle='modal' alt='edit' title='edit'><i class='icon-pencil'> </i></a>  <a href='{{ path('news_delete', {'id':news.id}) }}' title='delete' alt='delete'><i class='icon-trash'> </i></a></div>" title="Administration">
+                <div id="myModal{{ news.id }}" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <h3 id="myModalLabel">Administration</h3>
+                    </div>
+                    <div class="modal-body">
+                        {% render "ChouffeMagicBundle:News:update" with {'id':news.id} %}
+                    </div>
+                </div>
             {% endif %}
             <img src="{{ asset('images/news/'~news.cover) }}" width="100" class="media-object img-polaroid" />
             {% if is_granted('ROLE_ADMIN') %}
@@ -33,6 +49,7 @@
         </div>
         
     </div>
+    <hr class="bs-docs-separator" />
     {% endfor %}
 
 {% endblock %}

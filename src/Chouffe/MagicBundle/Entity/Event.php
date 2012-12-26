@@ -7,16 +7,16 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
- * Chouffe\MagicBundle\Entity\Photo
+ * Event
  *
  * @ORM\Table()
- * @ORM\Entity(repositoryClass="Chouffe\MagicBundle\Entity\PhotoRepository")
+ * @ORM\Entity(repositoryClass="Chouffe\MagicBundle\Entity\EventRepository")
  * @ORM\HasLifecycleCallbacks
  */
-class Photo
+class Event
 {
     /**
-     * @var integer $id
+     * @var integer
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -25,18 +25,25 @@ class Photo
     private $id;
 
     /**
-     * @var string $title
+     * @var string
      *
      * @ORM\Column(name="title", type="string", length=255)
      */
     private $title;
 
     /**
-     * @var string $image
+     * @var string
      *
-     * @ORM\Column(name="image", type="string", length=255, nullable=false)
+     * @ORM\Column(name="content", type="text")
      */
-    private $image;
+    private $content;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="cover", type="string", length=255, nullable=false)
+     */
+    private $cover;
 
     /**
      * @Assert\File(maxSize="6000000")
@@ -44,13 +51,21 @@ class Photo
     public $file;
 
     /**
-    * @ORM\ManyToOne(targetEntity="Chouffe\MagicBundle\Entity\Album", inversedBy="photos")
-    * @ORM\JoinColumn(nullable=false)
-    */
-    private $album;
+     * @var \DateTime
+     *
+     * @ORM\Column(name="date", type="datetime")
+     */
+    private $date;
 
     /**
+     * @var string
      *
+     * @ORM\Column(name="location", type="string", length=255)
+     */
+    private $location;
+
+
+    /**
      * Get id
      *
      * @return integer 
@@ -64,7 +79,7 @@ class Photo
      * Set title
      *
      * @param string $title
-     * @return Photo
+     * @return Event
      */
     public function setTitle($title)
     {
@@ -84,40 +99,109 @@ class Photo
     }
 
     /**
-     * Set image
+     * Set content
      *
-     * @param string $image
-     * @return Photo
+     * @param string $content
+     * @return Event
      */
-    public function setImage($image)
+    public function setContent($content)
     {
-        $this->image = $image;
+        $this->content = $content;
     
         return $this;
     }
 
     /**
-     * Get image
+     * Get content
      *
      * @return string 
      */
-    public function getImage()
+    public function getContent()
     {
-        return $this->image;
+        return $this->content;
+    }
+
+    /**
+     * Set cover
+     *
+     * @param string $cover
+     * @return Event
+     */
+    public function setCover($cover)
+    {
+        $this->cover = $cover;
+    
+        return $this;
+    }
+
+    /**
+     * Get cover
+     *
+     * @return string 
+     */
+    public function getCover()
+    {
+        return $this->cover;
+    }
+
+    /**
+     * Set date
+     *
+     * @param \DateTime $date
+     * @return Event
+     */
+    public function setDate($date)
+    {
+        $this->date = $date;
+    
+        return $this;
+    }
+
+    /**
+     * Get date
+     *
+     * @return \DateTime 
+     */
+    public function getDate()
+    {
+        return $this->date;
+    }
+
+    /**
+     * Set location
+     *
+     * @param string $location
+     * @return Event
+     */
+    public function setLocation($location)
+    {
+        $this->location = $location;
+    
+        return $this;
+    }
+
+    /**
+     * Get location
+     *
+     * @return string 
+     */
+    public function getLocation()
+    {
+        return $this->location;
     }
 
     public function getAbsolutePath()
     {
-        return null === $this->image
+        return null === $this->cover
             ? null
-            : $this->getUploadRootDir().'/'.$this->image;
+            : $this->getUploadRootDir().'/'.$this->cover;
     }
 
     public function getWebPath()
     {
-        return null === $this->image
+        return null === $this->cover
             ? null
-            : $this->getUploadDir().'/'.$this->image;
+            : $this->getUploadDir().'/'.$this->cover;
     }
 
     protected function getUploadRootDir()
@@ -131,15 +215,7 @@ class Photo
     {
         // get rid of the __DIR__ so it doesn't screw up
         // when displaying uploaded doc/image in the view.
-        return 'images/photos';
-    }
-
-    /**
-     * @ORM\PreUpdate()
-     */
-    public function updateDate()
-    {
-        $this->setDateLastUpdate(new \DateTime());
+        return 'images/events';
     }
     
     /**
@@ -151,7 +227,7 @@ class Photo
         if (null !== $this->file) {
             // do whatever you want to generate a unique name
             $filename = sha1(uniqid(mt_rand(), true));
-            $this->image = $filename.'.'.$this->file->guessExtension();
+            $this->cover = $filename.'.'.$this->file->guessExtension();
         }
     }
 
@@ -168,7 +244,7 @@ class Photo
         // if there is an error when moving the file, an exception will
         // be automatically thrown by move(). This will properly prevent
         // the entity from being persisted to the database on error
-        $this->file->move($this->getUploadRootDir(), $this->image);
+        $this->file->move($this->getUploadRootDir(), $this->cover);
 
         unset($this->file);
     }
@@ -181,28 +257,5 @@ class Photo
         if ($file = $this->getAbsolutePath()) {
             unlink($file);
         }
-    }
-
-    /**
-     * Set album
-     *
-     * @param \Chouffe\MagicBundle\Entity\Album $album
-     * @return Photo
-     */
-    public function setAlbum(\Chouffe\MagicBundle\Entity\Album $album)
-    {
-        $this->album = $album;
-    
-        return $this;
-    }
-
-    /**
-     * Get album
-     *
-     * @return \Chouffe\MagicBundle\Entity\Album 
-     */
-    public function getAlbum()
-    {
-        return $this->album;
     }
 }

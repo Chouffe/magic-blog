@@ -1,40 +1,8 @@
-{% extends "ChouffeMagicBundle::layout.html.twig" %}
-
-{% block page_content %}
-<h3>Album's form</h3>
-
 <div class="well">
-    <form method="post"  action="{{ path('album_add') }}" {{ form_enctype(form) }} name="album_form">
+    <form method="post"  action="{% if action == 'add' %}{{ path('album_add')
+    }}{% else %}{% if album is defined %}{{ path('album_update_add',
+    {'id':album.id}) }}{% endif %}{% endif %}" {{ form_enctype(form) }} name="album_form">
         {{ form_widget(form) }}
         <input type="submit" class="btn btn-primary" />
     </form>
 </div>
-{% endblock %}
-
-{% block jquery %}
-<script>
-    // function addAlbum()
-    // {
-    //     // alert('test'); 
-    //     $.post("../album/add", {title: 'TEST'});
-    //     return false;
-    // }
-    // 
-    // function fetchAlbum()
-    // {
-    //     // var result = $.get("../album/fetch", {id: '1'});
-    //     var result = $.get("../news/fetch/1", function(data){
-    //         console.log(data)});
-    //     console.log(result);
-    //     alert(result);
-    //     return false;
-    // }
-
-    // $(function(){
-    //     $('form[name="album_form"]').submit(function(){
-    //         return fetchAlbum();
-    //     });
-    // });
-    // 
-</script>
-{% endblock %}

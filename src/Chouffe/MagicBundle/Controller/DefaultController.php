@@ -9,6 +9,8 @@ use Chouffe\MagicBundle\Entity\News;
 use Chouffe\MagicBundle\Form\NewsType;
 use Chouffe\MagicBundle\Entity\Photo;
 use Chouffe\MagicBundle\Form\PhotoType;
+use Chouffe\MagicBundle\Entity\Event;
+use Chouffe\MagicBundle\Form\EventType;
 
 class DefaultController extends Controller
 {
@@ -16,24 +18,25 @@ class DefaultController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $repo = $em->getRepository('ChouffeMagicBundle:News');
-        $lastNews = $repo->find(1);
-        $lastNews->setContent('test new content');
         // $newNews = new News();
         // $newNews->setContent('test');
         // $newNews->setTitle('title');
         // $em->persist($newNews);
-        $em->persist($lastNews);
-        $em->flush();
+        // $em->persist($lastNews);
+        // $em->flush();
         // print_r($lastNews);
         $news = new News();
         $album = new Album();
         $photo = new Photo();
+        $event = new Event();
         $form = $this->createForm(new NewsType(), $news);
         $form2 = $this->createForm(new AlbumType, $album);
         $form3 = $this->createForm(new PhotoType, $photo);
+        $form4 = $this->createForm(new EventType, $event);
         // return $this->render('ChouffeMagicBundle:forms:news.html.twig', array('form' => $form->createView()));
         // return $this->render('ChouffeMagicBundle:forms:photo.html.twig', array('form' => $form3->createView()));
-        return $this->render('ChouffeMagicBundle:forms:album.html.twig', array('form' => $form2->createView()));
+        // return $this->render('ChouffeMagicBundle:forms:album.html.twig', array('form' => $form2->createView()));
+        return $this->render('ChouffeMagicBundle:forms:event.html.twig', array('form' => $form4->createView()));
         // return $this->render('ChouffeMagicBundle:Default:index.html.twig', array('name' => $name, 'form' => $form->createView()));
     }
 

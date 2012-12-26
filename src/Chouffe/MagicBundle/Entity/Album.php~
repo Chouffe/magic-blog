@@ -30,8 +30,14 @@ class Album
 
     /**
     * @ORM\OneToOne(targetEntity="Chouffe\MagicBundle\Entity\Photo", cascade={"persist"})
+    * @ORM\JoinColumn(nullable=true)
     */
     private $cover;   
+
+    /**
+    * @ORM\OneToMany(targetEntity="Chouffe\MagicBundle\Entity\Photo", mappedBy="album")
+    */
+    private $photos;
 
     /**
      * Get id
@@ -64,5 +70,28 @@ class Album
     public function getTitle()
     {
         return $this->title;
+    }
+
+    /**
+     * Set cover
+     *
+     * @param \Chouffe\MagicBundle\Entity\Photo $cover
+     * @return Album
+     */
+    public function setCover(\Chouffe\MagicBundle\Entity\Photo $cover = null)
+    {
+        $this->cover = $cover;
+    
+        return $this;
+    }
+
+    /**
+     * Get cover
+     *
+     * @return \Chouffe\MagicBundle\Entity\Photo 
+     */
+    public function getCover()
+    {
+        return $this->cover;
     }
 }

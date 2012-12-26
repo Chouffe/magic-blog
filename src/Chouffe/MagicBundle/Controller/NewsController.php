@@ -46,7 +46,7 @@ class NewsController extends Controller
         $news = new News();
         $form = $this->createForm(new NewsType, $news);
 
-        return $this->render('ChouffeMagicBundle:Default:news.html.twig', array('page' => 'home', 'form' => $form->createView(), 'newsList' => $newsList));
+        return $this->render('ChouffeMagicBundle:Default:news.html.twig', array('action' => 'add','page' => 'home', 'form' => $form->createView(), 'newsList' => $newsList));
     }
     
     public function fetchAction(News $news)
@@ -88,8 +88,35 @@ class NewsController extends Controller
     /**
      * @Secure(roles="ROLE_ADMIN")
      */
+    public function updateAddAction(News $news)
+    {
+        $form = $this->createForm(new NewsType, $news);
+
+        // La gestion d'un formulaire est particulière, mais l'idée est la suivante 
+        if( $this->get('request')->getMethod() == 'POST' )
+        {
+            // Ici, on s'occupera de la création et de la gestion du formulaire
+            $request = $this->get('request');
+            $form->bind($request);
+        
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($news);
+            $em->flush();
+        
+            $this->get('session')->getFlashBag()->add('notice', 'News added');
+            return new Response('1');
+        }
+
+        return new Response('0');
+    }
+
+    /**
+     * @Secure(roles="ROLE_ADMIN")
+     */
     public function updateAction(News $news)
     {
+        $form = $this->createForm(new NewsType, $news);
+        return $this->render('ChouffeMagicBundle:forms:news.html.twig', array('action' => 'update','form' => $form->createView()));
     }
 
     /**

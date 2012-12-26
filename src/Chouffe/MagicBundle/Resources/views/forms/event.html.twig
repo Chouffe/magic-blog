@@ -1,0 +1,11 @@
+{% extends "ChouffeMagicBundle::layout.html.twig" %}
+
+{% block page_content %}
+<div class="well">
+    <form method="post"  action="{{ path('event_add')
+    }}" {{ form_enctype(form) }} name="event_form">
+        {{ form_widget(form) }}
+        <input type="submit" class="btn btn-primary" />
+    </form>
+</div>
+{% endblock %}

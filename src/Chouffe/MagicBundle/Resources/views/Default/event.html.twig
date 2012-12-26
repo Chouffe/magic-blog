@@ -1,0 +1,8 @@
+<div class="well">
+{% for event in eventList %}
+    {{ event.title }}
+    {% render "ChouffeMagicBundle:Event:see" with {'id':event.id} %}
+{% else %}
+    No event planned...
+{% endfor %}
+</div>

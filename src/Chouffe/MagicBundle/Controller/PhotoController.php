@@ -4,8 +4,8 @@ namespace Chouffe\MagicBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
-use Chouffe\MagicBundle\Entity\Photo;
 use Chouffe\MagicBundle\Entity\Album;
+use Chouffe\MagicBundle\Entity\Photo;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use JMS\SecurityExtraBundle\Annotation\Secure;
 use Chouffe\MagicBundle\Form\PhotoType;;
@@ -50,7 +50,7 @@ class PhotoController extends Controller
     /**
      * @Secure(roles="ROLE_ADMIN")
      */
-    public function addAction(Album $album)
+    public function addAction(Photo $photo)
     {
         $photo = new Photo();
         $form = $this->createForm(new PhotoType, $photo);
@@ -61,9 +61,11 @@ class PhotoController extends Controller
             // Ici, on s'occupera de la création et de la gestion du formulaire
             $request = $this->get('request');
             $form->bind($request);
-            $photo->setAlbum($album);
+            $photo->setPhoto($photo);
         
             $em = $this->getDoctrine()->getManager();
+            $photo->addPhoto($photo);
+            $em->persist($photo);
             $em->persist($photo);
             $em->flush();
         
@@ -72,6 +74,31 @@ class PhotoController extends Controller
         }
 
         
+        return new Response('0');
+    }
+
+    /**
+     * @Secure(roles="ROLE_ADMIN")
+     */
+    public function updateAddAction(Photo $photo)
+    {
+        $form = $this->createForm(new PhotoType, $photo);
+
+        // La gestion d'un formulaire est particulière, mais l'idée est la suivante 
+        if( $this->get('request')->getMethod() == 'POST' )
+        {
+            // Ici, on s'occupera de la création et de la gestion du formulaire
+            $request = $this->get('request');
+            $form->bind($request);
+        
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($photo);
+            $em->flush();
+        
+            $this->get('session')->getFlashBag()->add('notice', 'Photo Updated');
+            return new Response('1');
+        }
+
         return new Response('0');
     }
 
