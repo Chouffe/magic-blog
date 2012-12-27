@@ -73,7 +73,7 @@ class PhotoController extends Controller
         }
 
         $this->get('session')->getFlashBag()->add('error', 'Error while saving the photo');
-        return $this->redirect($this->generateUrl('home'));
+        return $this->redirect($this->generateUrl('album_see', array('id' => $album->getId())));
     }
 
     /**

@@ -98,11 +98,12 @@ class AlbumController extends Controller
             $em->persist($album);
             $em->flush();
         
-            $this->get('session')->getFlashBag()->add('notice', 'News Updated');
-            return new Response('1');
+            $this->get('session')->getFlashBag()->add('info', 'Album updated');
+            return $this->redirect($this->generateUrl('gallery'));
         }
 
-        return new Response('0');
+        $this->get('session')->getFlashBag()->add('error', 'Error while updating the album');
+        return $this->redirect($this->generateUrl('gallery'));
     }
 
     /**

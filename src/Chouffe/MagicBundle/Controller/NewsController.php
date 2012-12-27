@@ -118,7 +118,7 @@ class NewsController extends Controller
     public function updateAction(News $news)
     {
         $form = $this->createForm(new NewsType, $news);
-        return $this->render('ChouffeMagicBundle:forms:news.html.twig', array('action' => 'update','form' => $form->createView()));
+        return $this->render('ChouffeMagicBundle:forms:news.html.twig', array('news' => $news, 'action' => 'update','form' => $form->createView()));
     }
 
     /**
