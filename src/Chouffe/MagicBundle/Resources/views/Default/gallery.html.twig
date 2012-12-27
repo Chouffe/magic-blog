@@ -19,7 +19,6 @@
 {% for album in albumList %}
 <li class="span3">
     <a href="{{ path('album_see', {'id':album.id}) }}" class="thumbnail">
-        <div style="height:200px; width:200px;"></div>
         {% if album.cover != null  %}
             <img src="{{ asset('images/photos/') }}{{ album.cover.image }}" />
         {% endif %}

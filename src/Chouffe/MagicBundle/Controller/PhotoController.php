@@ -50,7 +50,7 @@ class PhotoController extends Controller
     /**
      * @Secure(roles="ROLE_ADMIN")
      */
-    public function addAction(Photo $photo)
+    public function addAction(Album $album)
     {
         $photo = new Photo();
         $form = $this->createForm(new PhotoType, $photo);
@@ -61,20 +61,19 @@ class PhotoController extends Controller
             // Ici, on s'occupera de la création et de la gestion du formulaire
             $request = $this->get('request');
             $form->bind($request);
-            $photo->setPhoto($photo);
         
             $em = $this->getDoctrine()->getManager();
-            $photo->addPhoto($photo);
+            $album->addPhoto($photo);
             $em->persist($photo);
             $em->persist($photo);
             $em->flush();
         
-            $this->get('session')->getFlashBag()->add('notice', 'Photo saved');
-            return new Response('1');
+            $this->get('session')->getFlashBag()->add('info', 'Photo added');
+            return $this->redirect($this->generateUrl('album_see', array('id' => $album->getId())));
         }
 
-        
-        return new Response('0');
+        $this->get('session')->getFlashBag()->add('error', 'Error while saving the photo');
+        return $this->redirect($this->generateUrl('home'));
     }
 
     /**
@@ -117,9 +116,10 @@ class PhotoController extends Controller
         $em = $this->getDoctrine()->getManager();
         $em->remove($photo);
         
-        $response = new Response('1');        
         $em->flush();
-        return $response;
+
+        $this->get('session')->getFlashBag()->add('info', 'Photo deleted');
+        return $this->redirect($this->generateUrl('album_see', array('id' => $photo->getAlbum()->getId())));
     }
 
 }

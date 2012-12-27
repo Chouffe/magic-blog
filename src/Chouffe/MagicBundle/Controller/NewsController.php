@@ -78,11 +78,12 @@ class NewsController extends Controller
             $em->persist($news);
             $em->flush();
         
-            $this->get('session')->getFlashBag()->add('notice', 'News added');
-            return new Response('1');
+            $this->get('session')->getFlashBag()->add('info', 'News added');
+            return $this->redirect($this->generateUrl('home'));
         }
 
-        return new Response('0');
+        $this->get('session')->getFlashBag()->add('error', 'Error while saving the news');
+        return $this->redirect($this->generateUrl('home'));
     }
 
     /**
@@ -103,11 +104,12 @@ class NewsController extends Controller
             $em->persist($news);
             $em->flush();
         
-            $this->get('session')->getFlashBag()->add('notice', 'News added');
-            return new Response('1');
+            $this->get('session')->getFlashBag()->add('info', 'News updated');
+            return $this->redirect($this->generateUrl('home'));
         }
 
-        return new Response('0');
+        $this->get('session')->getFlashBag()->add('error', 'Error while updating the news');
+        return $this->redirect($this->generateUrl('home'));
     }
 
     /**
@@ -127,9 +129,10 @@ class NewsController extends Controller
         $em = $this->getDoctrine()->getManager();
         $em->remove($news);
         
-        $response = new Response('1');        
         $em->flush();
-        return $response;
+        $this->get('session')->getFlashBag()->add('info', 'News deleted');
+
+        return $this->redirect($this->generateUrl('home'));
     }
 
     public function indexAction($name)

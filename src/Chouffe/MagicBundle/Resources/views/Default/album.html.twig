@@ -23,7 +23,6 @@
 {% for photo in album.photos %}
 <li class="span3">
     <a href="#" class="thumbnail">
-        <div style="height:200px; width:200px;"></div>
         {% if photo.image != null  %}
             <img src="{{ asset('images/photos/') }}{{ photo.image }}" />
         {% endif %}
@@ -32,7 +31,7 @@
     <div onclick="adminPopover(this)" data-html="true"
     style="text-align:center;" rel="popover"
     data-placement="top" data-content="<a href='{{
-    path('photo_delete', {'id':photo.id}) }}'>Supprimer</a>" title="Administration">
+    path('photo_delete', {'id':photo.id}) }}' title='Delete'><i class='icon-trash'> </i></a>" title="Administration">
         <div style="margin-top:5px;" class="btn">Admin</div>
     </div> 
     {% endif %}

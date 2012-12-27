@@ -45,7 +45,7 @@ class Photo
 
     /**
     * @ORM\ManyToOne(targetEntity="Chouffe\MagicBundle\Entity\Album", inversedBy="photos")
-    * @ORM\JoinColumn(nullable=false)
+    * @ORM\JoinColumn(nullable=false, onDelete="cascade")
     */
     private $album;
 

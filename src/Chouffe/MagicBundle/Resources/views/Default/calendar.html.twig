@@ -1,0 +1,20 @@
+{% for event in eventList %}
+<div class="media">
+    {% if is_granted('ROLE_ADMIN') %}
+        <a href="{{ path('event_delete', {'id':event.id}) }}"
+        class="pull-right" title="Delete"><i class="icon-trash"> </i></a>
+    {% endif %}
+    <span class="pull-left">
+        <img src="{{ asset('images/events/'~event.cover) }}" width="100" class="media-object img-polaroid" />
+    </span>
+    <div class="media-body">
+        <h4 class="media-heading">{{ event.title }} - {{ event.location }} -  {{
+        event.date|date("d/m/Y") }}</h4>
+        {{ event.content }}           
+    </div>
+</div>
+<hr class="bs-docs-separator" />
+{% else %}
+No event planned...
+{% endfor %}
+

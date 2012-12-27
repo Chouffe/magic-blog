@@ -41,65 +41,124 @@
                     <a class="brand" href="#">My Website</a>
                     <div class="nav-collapse collapse">
                         <ul class="nav">
-                            <li{% if page is defined %} {% if page == 'home'%} class="active" {% endif %} {% endif %}><a href="{{ path('home') }}"><i class="icon-home icon-white"> </i></a></li>
-                            <li{% if page is defined %} {% if page == 'gallery'%} class="active" {% endif %} {% endif %}><a href="{{ path('gallery') }}"><i class="icon-picture icon-white"> </i></a></li>
-                            <li{% if page is defined %} {% if page == 'about'%} class="active" {% endif %} {% endif %}><a href="{{ path('about') }}"><i class="icon-question-sign icon-white"> </i></a></li>
-                            <li><a href="#email" data-toggle="modal"><i class="icon-envelope icon-white"> </i></a></li>
+                            <li{% if page is defined %} {% if page == 'home'%}
+                            class="active" {% endif %} {% endif %}><a href="{{
+                                path('home') }}" rel="tooltip"
+                                data-placement="bottom" title="Home" id="home"><i class="icon-home icon-white"> </i></a></li>
+                            <li{% if page is defined %} {% if page ==
+                            'gallery'%} class="active" {% endif %} {% endif
+                            %}><a href="{{ path('gallery') }}" id="gallery"
+                                data-placement="bottom" title="Gallery"
+                                rel="tooltip"><i class="icon-picture icon-white"> </i></a></li>
+                            <li{% if page is defined %} {% if page == 'about'%}
+                            class="active" {% endif %} {% endif %}><a href="{{
+                                path('about') }}"
+                                rel="tooltip" data-placement="bottom"
+                                title="About" id="about"><i class="icon-question-sign icon-white"> </i></a></li>
+                            <li><a href="#calendar-modal" rel="tooltip"
+                                title="Calendar" id="calendar"
+                                data-placement="bottom" data-toggle="modal"><i
+                                    class="icon-calendar icon-white"> </i></a></li>
+                            <li><a href="#email-modal" id="email" rel="tooltip"
+                                data-placement="bottom" title="Email" data-toggle="modal"><i class="icon-envelope icon-white"> </i></a></li>
                         </ul>
                     </div><!--/.nav-collapse -->
                 </div>
             </div>
         </div>
-        <div id="email" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                    <h3 id="myModalLabel">Send me an email</h3>
+        <div id="calendar-modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h3 id="myModalLabel">Calendar
+                
+                {% if is_granted('ROLE_ADMIN') %}
+                    <span class="btn btn-primary" id="calendarAdd">Add</span>
+                {% endif %}
+                </h3>
+            </div>
+            <div class="modal-body">
+                <div id="calendarList">
+                    {% render "ChouffeMagicBundle:Event:seeAll" %}
                 </div>
-                <div class="modal-body">
-                    <form class="form-horizontal">
-                        <div class="control-group">
-                            <label class="control-label" for="inputEmail">Your Email</label>
-                            <div class="controls">
-                                <input type="text" id="inputEmail" placeholder="test@example.com"><br />
-                            </div>
-                        </div>
-                        <div class="control-group">
-                            <label class="control-label" for="subject">Subject</label>
-                            <div class="controls">
-                                <select name="subject">
-                                    <option value="">1</option>
-                                    <option>2</option>
-                                    <option>3</option>
-                                    <option>4</option>
-                                </select>
-                            </div>
-                            
-                        </div>
-                        <div class="control-group">
-                            <label class="control-label" for="content">Content</label>
-                            <div class="controls">
-                                <textarea rows="8" name="content" id="content"></textarea>
+                <div id="calendarForm">
+                    {% render "ChouffeMagicBundle:Event:addForm" %}
+                </div>
+            </div>
+        </div>
 
-                            </div>
+        <div id="email-modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h3 id="myModalLabel">Send me an email</h3>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal">
+                    <div class="control-group">
+                        <label class="control-label" for="inputEmail">Your Email</label>
+                        <div class="controls">
+                            <input type="text" id="inputEmail" placeholder="test@example.com"><br />
                         </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <a href="#" class="btn" data-dismiss="modal">Close</a>
-                    <a href="#" class="btn btn-primary">Send email</a>
-                </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="subject">Subject</label>
+                        <div class="controls">
+                            <select name="subject">
+                                <option value="">1</option>
+                                <option>2</option>
+                                <option>3</option>
+                                <option>4</option>
+                            </select>
+                        </div>
+
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="content">Content</label>
+                        <div class="controls">
+                            <textarea rows="8" name="content" id="content"></textarea>
+
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <a href="#" class="btn" data-dismiss="modal">Close</a>
+                <a href="#" class="btn btn-primary">Send email</a>
+            </div>
         </div>
 
         <header id="header1">
-            <div class="container">
-                <h1>Paul Caillau ~ {% block main_title %}Home{% endblock %}</h1>
-            </div>
+        <div class="container">
+            <h1>Paul Caillau ~ {% block main_title %}Home{% endblock %}</h1>
+        </div>
         </header>
 
         <div class="container">
             <div id="content" class="span9">
+                {% if app.session.flashbag.get('info') is defined %}
+                    {% for message in app.session.flashbag.get('info') %}
+                        <div class="alert alert-success">
+                            <button type="button" class="close"
+                                data-dismiss="alert">&times;</button>
+                            <h4>Info</h4>
+                            <p>{{ message }}</p>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+                {% if app.session.flashbag.get('error') is defined %}
+                    {% for message in app.session.flashbag.get('error') %}
+                        <div class="alert alert-error">
+                            <button type="button" class="close"
+                                data-dismiss="alert">&times;</button>
+                            <h4>Error</h4>
+                            <p>{{ message }}</p>
+                        </div>
+                    {% endfor %}
+                {% endif %}
                 {% block body %}
                 {% endblock %}
+            </div>
+            <div class="span2 pull-right">
+                {% render "ChouffeMagicBundle:Event:agenda" %}
             </div>
         </div> <!-- /container -->
 
@@ -111,6 +170,21 @@
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
         <script type="text/javascript" src="{{ asset('js/bootstrap.js') }}"></script>
         {% endblock %}
+        <script>
+            $(function(){
+                $('#home').tooltip();
+                $('#gallery').tooltip();
+                $('#about').tooltip();
+                $('#calendar').tooltip();
+                $('#email').tooltip();
+                $('#calendarForm').hide();
+
+                $('#calendarAdd').click(function(){
+                    $('#calendarForm').toggle();
+                    $('#calendarList').toggle();
+                });
+            });
+        </script>
         {% block jquery %}
         {% endblock %}
 

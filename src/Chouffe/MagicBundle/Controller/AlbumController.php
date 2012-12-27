@@ -72,12 +72,12 @@ class AlbumController extends Controller
             $em->persist($album);
             $em->flush();
         
-            $this->get('session')->getFlashBag()->add('notice', 'Album saved');
-            return new Response('1');
+            $this->get('session')->getFlashBag()->add('info', 'Album added');
+            return $this->redirect($this->generateUrl('gallery'));
         }
 
-        
-        return new Response('0');
+        $this->get('session')->getFlashBag()->add('error', 'Error while saving the album');
+        return $this->redirect($this->generateUrl('gallery'));
     }
 
     /**
@@ -111,7 +111,7 @@ class AlbumController extends Controller
     public function updateAction(Album $album)
     {
         $form = $this->createForm(new AlbumType, $album);
-        return $this->render('ChouffeMagicBundle:forms:album.html.twig', array('action' => 'update', 'form' => $form->createView()));
+        return $this->render('ChouffeMagicBundle:forms:album.html.twig', array('album' => $album, 'action' => 'update', 'form' => $form->createView()));
     }
 
     /**
@@ -120,11 +120,16 @@ class AlbumController extends Controller
     public function deleteAction(Album $album)
     {
         $em = $this->getDoctrine()->getManager();
+        foreach( $album->getPhotos() as $photo )
+        {
+            $em->remove($photo);
+        }
+
         $em->remove($album);
-        
-        $response = new Response('1');        
         $em->flush();
-        return $response;
+
+        $this->get('session')->getFlashBag()->add('info', 'Album deleted');
+        return $this->redirect($this->generateUrl('gallery'));
     }
 
 }

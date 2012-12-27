@@ -35,7 +35,7 @@ class Album
     private $cover;   
 
     /**
-    * @ORM\OneToMany(targetEntity="Chouffe\MagicBundle\Entity\Photo", mappedBy="album")
+    * @ORM\OneToMany(targetEntity="Chouffe\MagicBundle\Entity\Photo", mappedBy="album", cascade={"remove"})
     */
     private $photos;
 

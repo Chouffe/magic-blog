@@ -32,12 +32,12 @@ class EventController extends Controller
             $em->persist($event);
             $em->flush();
         
-            $this->get('session')->getFlashBag()->add('notice', 'Event saved');
-            return new Response('1');
+            $this->get('session')->getFlashBag()->add('info', 'Event saved');
+            return $this->redirect($this->generateUrl('home'));
         }
 
-        
-        return new Response('0');
+        $this->get('session')->getFlashBag()->add('error', 'Error while saving the event');
+        return $this->redirect($this->generateUrl('home'));
     }
     /**
      * @Secure(roles="ROLE_ADMIN")
@@ -46,17 +46,17 @@ class EventController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $em->remove($event);
-        
-        $response = new Response('1');        
         $em->flush();
-        return $response;
+
+        $this->get('session')->getFlashBag()->add('info', 'Event deleted');
+        return $this->redirect($this->generateUrl('home'));
     }
 
     public function agendaAction()
     {
         $em = $this->getDoctrine()->getManager();
         $repo = $em->getRepository('ChouffeMagicBundle:Event');
-        $eventList = $repo->findAll();
+        $eventList = $repo->findBy(array(), array('date' => 'desc'));
 
         $event = new Event();
         $formEvent = $this->createForm(new EventType, $event);
@@ -68,5 +68,26 @@ class EventController extends Controller
     public function seeAction(Event $event)
     {
         return $this->render('ChouffeMagicBundle:Default:event-zoom.html.twig', array('event' => $event));
+    }
+
+    public function seeAllAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $repo = $em->getRepository('ChouffeMagicBundle:Event');
+        $eventList = $repo->findBy(array(), array('date' => 'desc'));
+
+        return $this->render('ChouffeMagicBundle:Default:calendar.html.twig', array('eventList' => $eventList));
+    }
+
+    /**
+     * @Secure(roles="ROLE_ADMIN")
+     */
+    public function addFormAction()
+    {
+        $event = new Event();
+        $form = $this->createForm(new EventType, $event);
+
+        // return new Response('Salut');
+        return $this->render('ChouffeMagicBundle:forms:event.html.twig', array('form' => $form->createView()));
     }
 }
