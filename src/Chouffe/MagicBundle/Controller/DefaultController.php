@@ -57,4 +57,16 @@ class DefaultController extends Controller
         $lastNews = $repo->find(1);
         return $this->render('ChouffeMagicBundle:Default:home.html.twig');
     }
+    
+    public function sendMailAction()
+    {
+        // $mailer = $this->get('mailer');
+        // $message = \Swift_Message::newInstance()
+        //                                         ->setSubject('Hello zéro !')
+        //                                         ->setFrom('chouffe.caillau@gmail.com')
+        //                                         ->setTo('chouffe.caillau@gmail.com')
+        //                                         ->setBody('Coucou, voici un email que vous venez de recevoir !');
+        // $mailer->send($message);
+ 
+    }
 }

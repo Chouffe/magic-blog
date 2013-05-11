@@ -80,9 +80,11 @@
                 <div id="calendarList">
                     {% render "ChouffeMagicBundle:Event:seeAll" %}
                 </div>
+                {% if is_granted('ROLE_ADMIN') %}
                 <div id="calendarForm">
                     {% render "ChouffeMagicBundle:Event:addForm" %}
                 </div>
+                {% endif %}
             </div>
         </div>
 
