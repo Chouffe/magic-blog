@@ -20,7 +20,7 @@
 <li class="span3">
     <a href="{{ path('album_see', {'id':album.id}) }}" class="thumbnail">
         {% if album.cover != null  %}
-            <img src="{{ asset('images/photos/') }}{{ album.cover.image }}" />
+            <img src="{{ asset('images/photos/'~album.cover.image) | apply_filter('my_thumb') }}" />
         {% endif %}
     </a>
     {% if is_granted('ROLE_ADMIN') %}

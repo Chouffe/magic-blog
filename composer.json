@@ -21,7 +21,8 @@
         "kriswallsmith/assetic": "1.1.*@dev",
         "winzou/console-bundle": "dev-master",
         "friendsofsymfony/user-bundle": "*",
-        "stof/doctrine-extensions-bundle": "dev-master"
+        "stof/doctrine-extensions-bundle": "dev-master",
+        "avalanche123/imagine-bundle": "*"
     },
     "scripts": {
         "post-install-cmd": [

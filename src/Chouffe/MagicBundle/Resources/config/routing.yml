@@ -104,3 +104,6 @@ about:
 home:
     pattern: /home
     defaults: { _controller: ChouffeMagicBundle:News:fetchAll }
+send_mail:
+    pattern: /email-send
+    defaults: { _controller: ChouffeMagicBundle:Default:sendMail }

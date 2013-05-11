@@ -1,6 +1,57 @@
 {
-    "hash": "e26b382bc8bc3417f9b3b119f8829f18",
+    "hash": "d9e9576b196b170166d5962e86516925",
     "packages": [
+        {
+            "name": "avalanche123/imagine-bundle",
+            "version": "v2.1.2",
+            "target-dir": "Avalanche/Bundle/ImagineBundle",
+            "source": {
+                "type": "git",
+                "url": "git://github.com/avalanche123/AvalancheImagineBundle.git",
+                "reference": "v2.1.2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/avalanche123/AvalancheImagineBundle/archive/v2.1.2.zip",
+                "reference": "v2.1.2",
+                "shasum": ""
+            },
+            "require": {
+                "symfony/framework-bundle": "2.*",
+                "imagine/imagine": "v0.4.1"
+            },
+            "require-dev": {
+                "makasim/temp-file": "dev-master"
+            },
+            "suggest": {
+                "symfony/twig-bundle": "2.*"
+            },
+            "time": "2012-12-13 18:34:10",
+            "type": "symfony-bundle",
+            "installation-source": "dist",
+            "autoload": {
+                "psr-0": {
+                    "Avalanche\\Bundle\\ImagineBundle": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Bulat Shakirzyanov",
+                    "email": "mallluhuct@gmail.com",
+                    "homepage": "http://avalanche123.com"
+                }
+            ],
+            "description": "Image manipulation using Imagine and Twig Filters.",
+            "homepage": "https://github.com/avalanche123/AvalancheImagineBundle",
+            "keywords": [
+                "image manipulation",
+                "imagine"
+            ]
+        },
         {
             "name": "doctrine/common",
             "version": "2.3.0",
@@ -275,23 +326,23 @@
         },
         {
             "name": "friendsofsymfony/user-bundle",
-            "version": "v1.3.0",
+            "version": "v1.3.1",
             "target-dir": "FOS/UserBundle",
             "source": {
                 "type": "git",
                 "url": "https://github.com/FriendsOfSymfony/FOSUserBundle",
-                "reference": "v1.3.0"
+                "reference": "v1.3.1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/FriendsOfSymfony/FOSUserBundle/zipball/v1.3.0",
-                "reference": "v1.3.0",
+                "url": "https://github.com/FriendsOfSymfony/FOSUserBundle/archive/v1.3.1.zip",
+                "reference": "v1.3.1",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.2",
-                "symfony/framework-bundle": "2.1.*",
-                "symfony/security-bundle": "2.1.*"
+                "symfony/framework-bundle": ">=2.1,<2.3-dev",
+                "symfony/security-bundle": ">=2.1,<2.3-dev"
             },
             "require-dev": {
                 "twig/twig": "*",
@@ -301,7 +352,7 @@
                 "symfony/yaml": "2.1.*",
                 "symfony/validator": "2.1.*"
             },
-            "time": "2012-10-05 15:21:26",
+            "time": "2012-12-22 15:09:34",
             "type": "symfony-bundle",
             "extra": {
                 "branch-alias": {
@@ -398,6 +449,54 @@
                 "nestedset",
                 "sortable",
                 "timestampable"
+            ]
+        },
+        {
+            "name": "imagine/Imagine",
+            "version": "v0.4.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/avalanche123/Imagine",
+                "reference": "v0.4.1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/avalanche123/Imagine/archive/v0.4.1.zip",
+                "reference": "v0.4.1",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.2"
+            },
+            "require-dev": {
+                "sami/sami": "dev-master"
+            },
+            "time": "2012-12-13 18:31:18",
+            "type": "library",
+            "installation-source": "dist",
+            "autoload": {
+                "psr-0": {
+                    "Imagine": "lib/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Bulat Shakirzyanov",
+                    "email": "mallluhuct@gmail.com",
+                    "homepage": "http://avalanche123.com"
+                }
+            ],
+            "description": "Image processing for PHP 5.3",
+            "homepage": "http://imagine.readthedocs.org/",
+            "keywords": [
+                "image manipulation",
+                "image processing",
+                "drawing",
+                "graphics"
             ]
         },
         {
